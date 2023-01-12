@@ -10,7 +10,7 @@ public class Selenium {
 		String exePath = "./src/test/resources/driver/chromedriver.exe";
 		System.setProperty("webdriver.chrome.driver",exePath);
 		WebDriver driver = new ChromeDriver();
-		driver.get("https://www.youtube.com/watch?v=9ocA4-Dp59g");
+		driver.get("https://www.google.com");
 	}
 
 }
