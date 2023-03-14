@@ -2,16 +2,24 @@
 <testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2023-01-11T19:19:23Z" name="Default suite" finished-at="2023-01-11T19:19:25Z" duration-ms="2452">
+  <suite started-at="2023-03-08T22:46:27Z" name="Default suite" finished-at="2023-03-08T22:46:38Z" duration-ms="10944">
     <groups>
     </groups>
-    <test started-at="2023-01-11T19:19:23Z" name="Default test" finished-at="2023-01-11T19:19:25Z" duration-ms="2452">
-      <class name="prueba.NewTestSel">
-        <test-method signature="f()[pri:0, instance:prueba.NewTestSel@5454d35e]" started-at="2023-01-11T16:19:23Z" name="f" finished-at="2023-01-11T16:19:25Z" duration-ms="2439" status="PASS">
+    <test started-at="2023-03-08T22:46:27Z" name="Default test" finished-at="2023-03-08T22:46:38Z" duration-ms="10944">
+      <class name="testCases_Search.TC_01_SearchDress">
+        <test-method is-config="true" signature="startWebDriver()[pri:0, instance:testCases_Search.TC_01_SearchDress@13f9ad9]" started-at="2023-03-08T19:46:27Z" name="startWebDriver" finished-at="2023-03-08T19:46:36Z" duration-ms="8424" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- f -->
-      </class> <!-- prueba.NewTestSel -->
+        </test-method> <!-- startWebDriver -->
+        <test-method signature="TC_01()[pri:0, instance:testCases_Search.TC_01_SearchDress@13f9ad9]" started-at="2023-03-08T19:46:36Z" name="TC_01" finished-at="2023-03-08T19:46:38Z" duration-ms="2321" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC_01 -->
+        <test-method is-config="true" signature="closeDriver()[pri:0, instance:testCases_Search.TC_01_SearchDress@13f9ad9]" started-at="2023-03-08T19:46:38Z" name="closeDriver" finished-at="2023-03-08T19:46:38Z" duration-ms="189" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- closeDriver -->
+      </class> <!-- testCases_Search.TC_01_SearchDress -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>

@@ -1,0 +1,79 @@
+Lo primero es crear el package commonclases y dentro definir el Driver Setup declarando el webDriver
+	Ejemplo de estructura basica de WebDriver:
+
+		public static WebDriver setupDriver() {
+			String exePath = "./src/test/resources/driver/chromedriver.exe";
+			System.setProperty("webdriver.chrome.driver",exePath);
+			WebDriver driver = new ChromeDriver();
+			driver.manage().window().maximize();
+			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+			return driver;
+		}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		
+Luego dentor de common clases definir variables globales, ya sean url, usuarios, pass, etc 
+
+		public static final String HOME_PAGE = "https://automationexercise.com/products";  //Final significa que es una variable constante, no cambiara durante toda la ejecucion 
+		public static final String USER = "admin";
+			
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			
+crear package navigation page primero es necesario declarar el constructor con su respectiva pagefactory y luego definir lo web element de manera privada junto con un metodo para acceder a ellos 
+		
+		//debe tener todos los web element y metodos 
+		//lo primeor es hacer la declaracion del constructor que debe llevar el mismo nombre de la clase 
+		//el constructor es un metodo que se inicializa al momento de instanciar un objeto de la clase 
+		public HomePage (WebDriver driver) {
+			//Instruccion de selenium es una forma de incializar los web element dentro de una parte diferente a la de la ejecucion del test
+			PageFactory.initElements(driver, this);
+		}
+
+		
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+Dentro de common clases crear wrap class, para definir metodos que se ejecutan antes o despues de que se acceda a un elemento de la pagina 
+		
+		//poner donde se hara el click, en este caso sera un WebElement de nombre webE, luego declaramos la accion en webE 
+		public static void click(WebElement webE) {
+			webE.click();
+		}
+				
+		//Podemos repetir webE ya que es local para cada metodo, en este caso se declara el web element y el tipo de dato que necesitara el metodo 
+		public static void sendKeys(WebElement webE, String textTosend) {
+			webE.sendKeys(textTosend);
+		}
+		
+	
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		
+finalmente nuestro test que se crea desde test ng class, que debe ir en src/test/java y en el package testCases aqui debemos 
+		
+		public class TC_01_SearchDress {
+	
+			//Declarar e inicializar el webdriver
+			WebDriver driver = DriverSetup.setupDriver();    
+			
+			//PageObjects de HomePage. dicho constructor necesita un objeto del tipo driver y asi inicializar el pagefactory y todo lo que esta dentro
+			HomePage homePage = new HomePage(driver);
+			
+			//Esto lo hara siempre antes de empezar cualquier test
+			@BeforeTest
+			public void startWebDriver() {
+				driver.get(GlobalVariables.HOME_PAGE); //get nos permite abrir la pagina que queremos utilizar
+			}
+			
+			@Test
+			public void TC_01() {
+				homePage.search("Pink"); //Se declara el string que necesita el metodo search para funcionar
+			}
+			
+			//Metodo que siempre se va a ejecutar al final de cada caso de prueba, se usa generalmente para cerrar el navegador 
+			@AfterTest
+			public void closeDriver() {
+				driver.quit();
+			}
+		}
