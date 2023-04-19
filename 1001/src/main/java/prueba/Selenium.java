@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 public class Selenium {
 
@@ -13,7 +14,9 @@ public class Selenium {
 		//doble diagonal se usa para comentar 
 		String exePath = "./src/test/resources/driver/chromedriver.exe";
 		System.setProperty("webdriver.chrome.driver",exePath);
-		WebDriver driver = new ChromeDriver();
+		ChromeOptions options = new ChromeOptions();
+		options.addArguments("--remote-allow-origins=*");
+		WebDriver driver = new ChromeDriver(options);
 		driver.get("https://automationexercise.com/products");
 		driver.manage().window().maximize();
 		Thread.sleep(2000);

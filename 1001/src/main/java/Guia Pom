@@ -1,4 +1,4 @@
-Lo primero es crear el package commonclases y dentro definir el Driver Setup declarando el webDriver
+Lo primero es crear el package commonclases y dentro definir la class Driver Setup declarando el webDriver
 	Ejemplo de estructura basica de WebDriver:
 
 		public static WebDriver setupDriver() {
@@ -12,7 +12,7 @@ Lo primero es crear el package commonclases y dentro definir el Driver Setup dec
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		
-Luego dentor de common clases definir variables globales, ya sean url, usuarios, pass, etc 
+Luego dentro de common clases definir la clase variables globales, ya sean url, usuarios, pass, etc 
 
 		public static final String HOME_PAGE = "https://automationexercise.com/products";  //Final significa que es una variable constante, no cambiara durante toda la ejecucion 
 		public static final String USER = "admin";
@@ -20,13 +20,16 @@ Luego dentor de common clases definir variables globales, ya sean url, usuarios,
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			
-crear package navigation page primero es necesario declarar el constructor con su respectiva pagefactory y luego definir lo web element de manera privada junto con un metodo para acceder a ellos 
+crear package navigation page y dentro de esta, crear clases dependiendo cada una de las paginas que utilizaremos, 
+para esto primero es necesario declarar el constructor con su respectiva pagefactory y luego definir lo web element 
+de manera privada junto con un metodo para acceder a ellos 
 		
-		//debe tener todos los web element y metodos 
-		//lo primeor es hacer la declaracion del constructor que debe llevar el mismo nombre de la clase 
-		//el constructor es un metodo que se inicializa al momento de instanciar un objeto de la clase 
+		debe tener todos los web element y metodos 
+		lo primero es hacer la declaracion del constructor que debe llevar el mismo nombre de la clase 
+		el constructor es un metodo que se inicializa al momento de instanciar un objeto de la clase 
+		
 		public HomePage (WebDriver driver) {
-			//Instruccion de selenium es una forma de incializar los web element dentro de una parte diferente a la de la ejecucion del test
+			//PageFactory, es una instruccion de selenium que es una forma de incializar los web element dentro de una parte diferente a la de la ejecucion del test
 			PageFactory.initElements(driver, this);
 		}
 
@@ -34,7 +37,7 @@ crear package navigation page primero es necesario declarar el constructor con s
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-Dentro de common clases crear wrap class, para definir metodos que se ejecutan antes o despues de que se acceda a un elemento de la pagina 
+Dentro de common clases crear la clase wrap class, para definir metodos que se ejecutan antes o despues de que se acceda a un elemento de la pagina 
 		
 		//poner donde se hara el click, en este caso sera un WebElement de nombre webE, luego declaramos la accion en webE 
 		public static void click(WebElement webE) {
@@ -46,11 +49,18 @@ Dentro de common clases crear wrap class, para definir metodos que se ejecutan a
 			webE.sendKeys(textTosend);
 		}
 		
+		// Este no es void porque queremos que nos retorne un string
+		public static String getText(WebElement webE) {
+			return webE.getText();
+		}
+
 	
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		
-finalmente nuestro test que se crea desde test ng class, que debe ir en src/test/java y en el package testCases aqui debemos 
+finalmente nuestro test que se crea desde test ng class, esto se hace con click derecho en la carpeta, luego test ng y luego en create testng class
+que debe ir en src/test/java y en el package testCases aqui debemos instanciar el webdriver desde driversetup 
+luego 
 		
 		public class TC_01_SearchDress {
 	
@@ -76,4 +86,163 @@ finalmente nuestro test que se crea desde test ng class, que debe ir en src/test
 			public void closeDriver() {
 				driver.quit();
 			}
+			
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+Teniendo el testCase, podemos reutilizar el codigo para hacer nuevos casos de prueba, en este caso una segunda busqueda,
+que en este caso haga validacion sobre los elementos encontrado 
+instanciar las paginas de navegacion y luego utilizarlas con el nombre instanciado 
+
+		public class TC_02_SearchBlue {
+			//Declarar e inicializar el webdriver
+			WebDriver driver = DriverSetup.setupDriver();    
+		
+			//PageObjects de HomePage. dicho constructor necesita un objeto del tipo driver y asi inicializar el pagefactory y todo lo que esta dentro
+			HomePage homePage = new HomePage(driver);
+			SearchResultsPage searchPage = new SearchResultsPage(driver);
+		
+
+			//Esto lo hara siempre antes de empezar cualquier test
+			@BeforeTest
+			public void startWebDriver() {
+				driver.get(GlobalVariables.HOME_PAGE); //get nos permite abrir la pagina que queremos utilizar
+			}
+			
+			@Test
+			public void TC_02() {
+				homePage.search("Blue"); //Se declara el string que necesita el metodo search para funcionar
+				boolean visibleText = searchPage.getPrdText("Blue");
+				Assert.assertTrue(visibleText,"EL texto Blue no esta desplegado");
+			}
+			
+			//Metodo que siempre se va a ejecutar al final de cada caso de prueba, se usa generalmente para cerrar el navegador 
+			@AfterTest
+			public void closeDriver() {
+				driver.quit();
+			}
+			
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+luego de eso dentro de src/test/java creamos una testSuite que nos permite ejecutar varios casos de prueba de manera secuencias o en paralelo
+para esto debemos crear un archivo XML, esto se hace creando un archivo normal poniendole nombre.XML 
+la estructura es definida desde la documentacion de testNg pero la mas basica es algo asi 
+
+		<?xml version="1.0" encoding="UTF-8"?>
+		<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+		<!-- Estructura se obtiene de la libreria de test ng, se encuentra buscando testbg.xml 
+		thread-count nos ayuda a designar uantos test se corren en paralelo
+		en class es necesario identificar la carpeta donde esta el test . y el nombre del archivo 
+		en suite va el nombre de la carpeta 
+		-->
+		<suite name="testSuite_Search" parallel="tests" thread-count="5">
+			<test name="TC_01_SearchPink">
+				<classes>
+					<class name="testCases_Search.TC_01_SearchPink" />
+				</classes>
+			</test>
+			<test name="TC_02_SearchBlue">
+				<classes>
+					<class name="testCases_Search.TC_02_SearchBlue" />
+				</classes>
+			</test>
+		</suite>
+		
+		
+		
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+Paga sacar datos desde un json, primero creamos el json con su estructura basica
+
+{
+ "TC_04": {
+ 		"searchCriteria":"Pink"
+ 		"searchCriteria2":"Blue"
+	 }
+}
+
+
+necesitamos descargar las dependencias en POM.XML
+
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20170516</version>
+		</dependency>
+
+luego de esto debemos agregar el archivo json a las variables globales. 
+
+	public static final String DATA_PATH = "./src/test/resources/data/";
+	
+	
+luego desde wrapp class, crear el metodo para llamar el json 
+
+
+	public static String getJsonValue (String jsonFileObj, String jsonKey) {
+		
+		try {
+			//JSON Data
+			InputStream inputStream = new FileInputStream(GlobalVariables.DATA_PATH + jsonFileObj + ".json");
+			JSONObject jsonObject = new JSONObject (new JSONTokener(inputStream));
+			
+			//Get Data
+			String jsonValue = jsonObject.getJSONObject(jsonFileObj).getString(jsonKey);
+			return jsonValue;
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
 		}
+	}
+	
+	
+y finalmente desde nuestro testCase crear una variable que llame al metodo para guardar el elemento que deseamos del json 
+
+	String searchCriteria = WrapClass.getJsonValue("TC_04", "searchCriteria");
+			omePage.search(searchCriteria);
+			
+		
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+Para leer un excel 
+lo primero es crear el metodo en wrap class 
+
+
+	public static String getCellData(String excelName, int row, int column) {
+		// Reading Data
+		try {
+			// Reading Data
+			FileInputStream fis = new FileInputStream(GlobalVariables.DATA_PATH + excelName + ".xlsx");
+
+			// Construir un objeto de excel
+			try {
+				Workbook wb = new XSSFWorkbook(fis);
+				//importar el ss en Sheet 
+				Sheet sheet = wb.getSheetAt(0);
+				Row rowObj = sheet.getRow(row);
+				Cell cell = rowObj.getCell(column);
+				String value = cell.getStringCellValue();
+				return value;
+						
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return null;
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null; 
+		}
+	}
+	
+	
+luego de eso en el test case, ingresar los datos que necesita el metodo. 
+
+	public void TC_04() {
+		String searchCriteria = WrapClass.getCellData("TC_05", 1, 0);
+		homePage.search(searchCriteria); //Se declara el string que necesita el metodo search para funcionar
+		boolean visibleText = searchPage.getPrdText(searchCriteria);
+		Assert.assertTrue(visibleText,"EL texto Dress no esta desplegado");

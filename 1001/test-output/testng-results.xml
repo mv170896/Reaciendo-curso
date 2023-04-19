@@ -2,24 +2,24 @@
 <testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2023-03-08T22:46:27Z" name="Default suite" finished-at="2023-03-08T22:46:38Z" duration-ms="10944">
+  <suite started-at="2023-04-04T15:45:31Z" name="Default suite" finished-at="2023-04-04T15:45:37Z" duration-ms="6509">
     <groups>
     </groups>
-    <test started-at="2023-03-08T22:46:27Z" name="Default test" finished-at="2023-03-08T22:46:38Z" duration-ms="10944">
-      <class name="testCases_Search.TC_01_SearchDress">
-        <test-method is-config="true" signature="startWebDriver()[pri:0, instance:testCases_Search.TC_01_SearchDress@13f9ad9]" started-at="2023-03-08T19:46:27Z" name="startWebDriver" finished-at="2023-03-08T19:46:36Z" duration-ms="8424" status="PASS">
+    <test started-at="2023-04-04T15:45:31Z" name="Default test" finished-at="2023-04-04T15:45:37Z" duration-ms="6509">
+      <class name="testCases_Search.TC_05_SearchExcel">
+        <test-method is-config="true" signature="startWebDriver()[pri:0, instance:testCases_Search.TC_05_SearchExcel@7a55f148]" started-at="2023-04-04T11:45:31Z" name="startWebDriver" finished-at="2023-04-04T11:45:35Z" duration-ms="4287" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- startWebDriver -->
-        <test-method signature="TC_01()[pri:0, instance:testCases_Search.TC_01_SearchDress@13f9ad9]" started-at="2023-03-08T19:46:36Z" name="TC_01" finished-at="2023-03-08T19:46:38Z" duration-ms="2321" status="PASS">
+        <test-method signature="TC_04()[pri:0, instance:testCases_Search.TC_05_SearchExcel@7a55f148]" started-at="2023-04-04T11:45:35Z" name="TC_04" finished-at="2023-04-04T11:45:37Z" duration-ms="1869" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- TC_01 -->
-        <test-method is-config="true" signature="closeDriver()[pri:0, instance:testCases_Search.TC_01_SearchDress@13f9ad9]" started-at="2023-03-08T19:46:38Z" name="closeDriver" finished-at="2023-03-08T19:46:38Z" duration-ms="189" status="PASS">
+        </test-method> <!-- TC_04 -->
+        <test-method is-config="true" signature="closeDriver()[pri:0, instance:testCases_Search.TC_05_SearchExcel@7a55f148]" started-at="2023-04-04T11:45:37Z" name="closeDriver" finished-at="2023-04-04T11:45:37Z" duration-ms="343" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- closeDriver -->
-      </class> <!-- testCases_Search.TC_01_SearchDress -->
+      </class> <!-- testCases_Search.TC_05_SearchExcel -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>

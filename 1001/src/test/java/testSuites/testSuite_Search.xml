@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<!-- Estructura se obtiene de la libreria de test ng, se encuentra buscando testbg.xml 
+thread-count nos ayuda a designar uantos test se corren en paralelo
+en class es necesario identificar la carpeta donde esta el test . y el nombre del archivo 
+en suite va el nombre de la carpeta 
+-->
+<suite name="testSuite_Search" parallel="tests" thread-count="5">
+	<test name="TC_01_SearchPink">
+		<classes>
+			<class name="testCases_Search.TC_01_SearchPink" />
+		</classes>
+	</test>
+	<test name="TC_02_SearchBlue">
+		<classes>
+			<class name="testCases_Search.TC_02_SearchBlue" />
+		</classes>
+	</test>
+		<test name="TC_03_Login">
+		<classes>
+			<class name="testCases_Search.TC_03_Login" />
+		</classes>
+	</test>
+</suite>

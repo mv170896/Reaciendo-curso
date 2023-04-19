@@ -24,12 +24,18 @@ public class HomePage {
 	@FindBy(xpath = "//button[@id='submit_search']")
 	private WebElement searchBtn;
 	
+	@FindBy(xpath = "//a[@href='/login'][contains(.,'Signup / Login')]")
+	private WebElement singUp;
+	
 	//la mejor practica para automatizacion es usar el constructor y la encapsulacion ya que todos los web element son privados y se accede a ellos mediante metodos publicos 
 	//Metodo publico que necesita un string que sera enviado desde el caso de prueba 
 	public void search(String textToSearch) {
 		//escribe el texto que ingresemos y luego presiona en buscar
 		WrapClass.sendKeys(searchBar, textToSearch);
 		WrapClass.click(searchBtn);
+	
 	}
-
+	public void login() {
+		WrapClass.click(singUp);
+	}
 }
